@@ -1,0 +1,4 @@
+interface:
+  display_name: "提交与PR规范"
+  short_description: "统一 commit、PR、测试证明、风险与回滚说明要求。"
+  default_prompt: "使用 $commit-pr-spec 检查我当前改动的 commit 和 PR 是否符合团队规范。"
