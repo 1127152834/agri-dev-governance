@@ -1,0 +1,4 @@
+interface:
+  display_name: "任务状态同步"
+  short_description: "同步任务池、成员面板与模块文档状态，修正状态不一致。"
+  default_prompt: "使用 $task-status-sync 同步任务池、成员目录和模块文档中的任务状态。"
