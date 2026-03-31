@@ -71,7 +71,10 @@ window.developmentLifecycleData = {
       input: "业务目标、问题反馈、优化建议",
       output: "可拆分的任务候选项",
       gate: "任务来源与目标清晰，具备初步上下文",
-      description: "任何开发工作都必须从明确的问题或目标开始，不允许无来源地直接进入实现。"
+      description: "任何开发工作都必须从明确的问题或目标开始，不允许无来源地直接进入实现。",
+      skill: "product-strategist / team-dev-spec",
+      prompt:
+        "请基于当前业务目标，整理【模块名称】的任务背景与目标。\n要求：\n1. 明确问题来源、目标用户、业务价值。\n2. 输出可拆分的任务候选项。\n3. 标注优先级、风险和依赖。\n参考：团队开发总规范、已有模块文档、业务需求输入。"
     },
     {
       id: "task-breakdown",
@@ -87,7 +90,10 @@ window.developmentLifecycleData = {
       input: "任务候选项",
       output: "可执行的任务单元",
       gate: "边界清楚、责任明确、可追踪",
-      description: "将粗粒度需求拆分为可认领、可评估、可交付的任务项，避免范围失控。"
+      description: "将粗粒度需求拆分为可认领、可评估、可交付的任务项，避免范围失控。",
+      skill: "product-strategist / task-pool-manager",
+      prompt:
+        "请把【模块名称】需求拆分成可执行任务。\n要求：\n1. 每个任务都要有目标、范围、前置依赖、验收标准。\n2. 粒度控制在可独立认领和交付。\n3. 标注建议责任角色。\n输出格式：任务池标准任务项列表。"
     },
     {
       id: "task-published",
@@ -103,7 +109,10 @@ window.developmentLifecycleData = {
       input: "已拆分任务",
       output: "任务池中的可认领任务",
       gate: "任务状态进入已发布，优先级与说明完整",
-      description: "任务进入任务池后才允许认领或指派，所有任务必须在任务池中留痕。"
+      description: "任务进入任务池后才允许认领或指派，所有任务必须在任务池中留痕。",
+      skill: "task-pool-manager",
+      prompt:
+        "请把以下任务发布到任务池：\n- 模块：【模块名称】\n- 任务：……\n要求：\n1. 写清优先级、任务描述、验收标准、依赖。\n2. 进入已发布状态。\n3. 更新任务池日志。"
     },
     {
       id: "task-assigned",
@@ -119,7 +128,10 @@ window.developmentLifecycleData = {
       input: "任务池中的已发布任务",
       output: "进入个人未开始列表的任务",
       gate: "责任人明确，认领或指派记录已写入日志",
-      description: "任务一旦被认领或指派，必须同步到成员状态与任务索引中。"
+      description: "任务一旦被认领或指派，必须同步到成员状态与任务索引中。",
+      skill: "task-claim / member-init",
+      prompt:
+        "请认领【任务编号 / 模块名称】任务。\n要求：\n1. 更新 docs/成员名/tasks.md 中的未开始列表。\n2. 更新 status.md 当前任务。\n3. 在任务池中记录认领时间、认领人和当前状态。"
     },
     {
       id: "requirement",
@@ -135,7 +147,10 @@ window.developmentLifecycleData = {
       input: "已认领任务",
       output: "需求说明文档",
       gate: "目标、范围、验收标准明确",
-      description: "开发前必须先形成可评审的需求说明，作为设计和实施计划的基础。"
+      description: "开发前必须先形成可评审的需求说明，作为设计和实施计划的基础。",
+      skill: "product-strategist",
+      prompt:
+        "使用 product-strategist 编写【模块名称】需求说明。\n要求：\n1. 明确业务目标、用户场景、范围边界、验收标准。\n2. 输出到 docs/成员名/模块名称/01-需求说明.md。\n3. 参考任务池任务描述、历史模块文档、业务输入。"
     },
     {
       id: "product-design",
@@ -151,7 +166,10 @@ window.developmentLifecycleData = {
       input: "需求说明文档",
       output: "产品设计文档，必要时包含界面与交互方案",
       gate: "关键流程、边界与异常场景说明清楚",
-      description: "涉及功能改动的任务必须先经过设计环节，不能直接跳到开发。"
+      description: "涉及功能改动的任务必须先经过设计环节，不能直接跳到开发。",
+      skill: "product-strategist / product-designer",
+      prompt:
+        "使用 product-strategist 为【模块名称】输出产品设计。\n如果涉及界面，补充 product-designer 的 UI/交互设计说明。\n要求：\n1. 描述主流程、异常流程、状态变化。\n2. 明确页面/接口/数据对象影响范围。\n3. 输出到 docs/成员名/模块名称/02-产品设计.md。"
     },
     {
       id: "implementation-plan",
@@ -167,7 +185,10 @@ window.developmentLifecycleData = {
       input: "产品设计文档",
       output: "实施计划文档",
       gate: "文件范围、任务步骤、验证方式明确",
-      description: "实施计划负责把设计变成可执行任务，明确如何开发、如何验证、如何交付。"
+      description: "实施计划负责把设计变成可执行任务，明确如何开发、如何验证、如何交付。",
+      skill: "writing-plans",
+      prompt:
+        "使用 writing-plans 为【模块名称】编写实施计划。\n要求：\n1. 参考 docs/成员名/模块名称/02-产品设计.md。\n2. 明确涉及文件、任务拆解、验证命令和交付物。\n3. 输出到 docs/成员名/模块名称/03-实施计划.md。"
     },
     {
       id: "create-worktree",
@@ -183,7 +204,10 @@ window.developmentLifecycleData = {
       input: "实施计划、分支命名",
       output: "独立工作区与开发分支",
       gate: "worktree 已隔离，命名符合规范",
-      description: "默认使用独立 worktree 承载任务开发，避免并行任务互相污染。"
+      description: "默认使用独立 worktree 承载任务开发，避免并行任务互相污染。",
+      skill: "using-git-worktrees",
+      prompt:
+        "使用 using-git-worktrees 为【模块名称 / 任务编号】创建独立 worktree。\n要求：\n1. 分支命名符合团队规范。\n2. worktree 目录使用项目内 .worktrees/。\n3. 创建后记录当前 worktree 和分支到 status.md。"
     },
     {
       id: "development",
@@ -199,7 +223,10 @@ window.developmentLifecycleData = {
       input: "实施计划、独立工作区",
       output: "代码改动与开发记录",
       gate: "实现内容与计划一致，必要文档同步更新",
-      description: "功能开发、修复与调整均在此阶段完成，禁止脱离计划无边界扩展。"
+      description: "功能开发、修复与调整均在此阶段完成，禁止脱离计划无边界扩展。",
+      skill: "test-driven-development / subagent-driven-development",
+      prompt:
+        "请按照实施计划执行【模块名称】开发。\n要求：\n1. 优先遵循 test-driven-development。\n2. 代码改动必须与计划一致，避免范围蔓延。\n3. 同步更新 docs/成员名/模块名称/04-开发记录.md。\n4. 如需并行执行，使用 subagent-driven-development。"
     },
     {
       id: "testing",
@@ -215,7 +242,10 @@ window.developmentLifecycleData = {
       input: "代码改动与验收标准",
       output: "测试报告",
       gate: "核心场景通过，风险点与未覆盖项已记录",
-      description: "提交前必须补齐测试验证结果，不能凭主观判断宣称完成。"
+      description: "提交前必须补齐测试验证结果，不能凭主观判断宣称完成。",
+      skill: "verification-before-completion",
+      prompt:
+        "使用 verification-before-completion 验证【模块名称】改动。\n要求：\n1. 运行实际验证命令并记录结果。\n2. 输出 docs/成员名/模块名称/05-测试报告.md。\n3. 明确通过项、失败项、风险点和未覆盖范围。"
     },
     {
       id: "submit-pr",
@@ -231,7 +261,10 @@ window.developmentLifecycleData = {
       input: "代码改动、测试报告、关联文档",
       output: "规范化 commit 与 PR",
       gate: "提交格式合规，PR 描述完整，关联文档齐全",
-      description: "PR 是交付入口，必须同时携带设计、计划与测试证明。"
+      description: "PR 是交付入口，必须同时携带设计、计划与测试证明。",
+      skill: "commit-pr-spec",
+      prompt:
+        "请按团队提交规范为【模块名称】准备 commit 与 PR。\n要求：\n1. commit message 符合规范。\n2. PR 描述包含需求、设计、实施计划、测试报告链接。\n3. 说明风险与回滚点。"
     },
     {
       id: "review",
@@ -247,7 +280,10 @@ window.developmentLifecycleData = {
       input: "PR、测试报告、评审意见",
       output: "通过、驳回或要求返工",
       gate: "质量门禁与评审意见处理完成",
-      description: "评审阶段负责发现设计偏差、实现问题和遗漏风险，是返工最常见的回流点。"
+      description: "评审阶段负责发现设计偏差、实现问题和遗漏风险，是返工最常见的回流点。",
+      skill: "requesting-code-review / receiving-code-review",
+      prompt:
+        "请对【模块名称】发起评审或处理评审反馈。\n要求：\n1. 发评审时引用测试报告和设计文档。\n2. 收到反馈后使用 receiving-code-review 判断是否采纳。\n3. 必要时回退到实施计划或开发实现阶段。"
     },
     {
       id: "archive",
@@ -263,7 +299,10 @@ window.developmentLifecycleData = {
       input: "已通过评审的 PR",
       output: "已合并代码、已更新文档、已归档任务",
       gate: "成员状态、任务状态、日报与复盘同步完成",
-      description: "合并不是结束，任务还必须完成状态回写、归档与经验沉淀。"
+      description: "合并不是结束，任务还必须完成状态回写、归档与经验沉淀。",
+      skill: "finishing-a-development-branch / work-report",
+      prompt:
+        "在【模块名称】合并完成后，请执行交付收尾。\n要求：\n1. 更新成员状态、任务池状态和模块文档。\n2. 生成日报或阶段总结。\n3. 必要时使用 finishing-a-development-branch 完成分支清理。"
     },
     {
       id: "task-cancelled",

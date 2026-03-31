@@ -9,7 +9,9 @@
     role: document.getElementById("detail-role"),
     input: document.getElementById("detail-input"),
     output: document.getElementById("detail-output"),
-    gate: document.getElementById("detail-gate")
+    gate: document.getElementById("detail-gate"),
+    skill: document.getElementById("detail-skill"),
+    prompt: document.getElementById("detail-prompt")
   };
   const viewButtons = document.querySelectorAll(".view-button");
 
@@ -19,6 +21,10 @@
   };
 
   const nodesById = new Map(data.nodes.map((node) => [node.id, node]));
+  const mainEdges = [];
+  const exceptionEdges = [];
+  const mainNodes = new Map();
+  const groupNodes = new Map();
 
   document.getElementById("meta-version").textContent = data.meta.version;
   document.getElementById("meta-date").textContent = data.meta.date;
@@ -47,6 +53,8 @@
     detailElements.input.textContent = node.input;
     detailElements.output.textContent = node.output;
     detailElements.gate.textContent = node.gate;
+    detailElements.skill.textContent = node.skill || "未定义";
+    detailElements.prompt.textContent = node.prompt || "暂无参考提示词";
   }
 
   function isExceptionVisible() {
@@ -118,7 +126,10 @@
       container: graphContainer,
       width: graphContainer.clientWidth || 1200,
       height: 680,
-      panning: false,
+      panning: {
+        enabled: true,
+        modifiers: null
+      },
       mousewheel: {
         enabled: true,
         minScale: 0.75,
@@ -138,7 +149,7 @@
 
   const graph = createGraph();
 
-  function drawBlueprintFrame() {
+  function createBlueprintFrame() {
     graph.addNode({
       id: "frame-outer",
       shape: "rect",
@@ -174,11 +185,9 @@
     });
   }
 
-  function drawGroups() {
+  function createGroups() {
     data.groups.forEach((group) => {
-      if (!isExceptionVisible() && group.id === "g6") return;
-
-      graph.addNode({
+      const cell = graph.addNode({
         id: group.id,
         shape: "rect",
         x: group.x,
@@ -206,17 +215,17 @@
           }
         }
       });
+
+      groupNodes.set(group.id, cell);
     });
   }
 
-  function drawNodes() {
+  function createNodes() {
     data.nodes.forEach((node) => {
-      if (!isNodeVisible(node)) return;
-
       const visual = getNodeVisual(node);
       const selected = state.selectedId === node.id;
 
-      graph.addNode({
+      const cell = graph.addNode({
         id: node.id,
         shape: "rect",
         x: node.x,
@@ -245,10 +254,12 @@
           }
         }
       });
+
+      mainNodes.set(node.id, cell);
     });
   }
 
-  function drawEdge(source, target, options = {}) {
+  function createEdge(source, target, options = {}) {
     const selected = state.selectedId === source || state.selectedId === target;
 
     return graph.addEdge({
@@ -277,28 +288,64 @@
     });
   }
 
-  function drawEdges() {
+  function createEdges() {
     data.edges.forEach(([source, target]) => {
-      drawEdge(source, target);
+      mainEdges.push(createEdge(source, target));
     });
 
-    if (!isExceptionVisible()) {
-      return;
-    }
-
     data.exceptionEdges.forEach(([source, target]) => {
-      drawEdge(source, target, { exception: true });
+      exceptionEdges.push(createEdge(source, target, { exception: true }));
     });
   }
 
+  function updateNodeStyles() {
+    data.nodes.forEach((node) => {
+      const cell = mainNodes.get(node.id);
+      if (!cell) return;
+
+      const visual = getNodeVisual(node);
+      const selected = state.selectedId === node.id;
+      const visible = isNodeVisible(node);
+
+      cell.setVisible(visible);
+      cell.attr("body/fill", selected ? "rgba(34,211,238,0.16)" : visual.fill);
+      cell.attr("body/stroke", selected ? "#22d3ee" : visual.stroke);
+      cell.attr("body/strokeWidth", selected ? 2.2 : 1.4);
+      cell.attr("label/fill", selected ? "#ecfeff" : visual.labelColor);
+      cell.attr(
+        "body/filter",
+        selected
+          ? { name: "dropShadow", args: { dx: 0, dy: 0, blur: 8, color: "rgba(34,211,238,0.55)" } }
+          : undefined
+      );
+    });
+  }
+
+  function updateGroupVisibility() {
+    data.groups.forEach((group) => {
+      const cell = groupNodes.get(group.id);
+      if (!cell) return;
+      cell.setVisible(isExceptionVisible() || group.id !== "g6");
+    });
+  }
+
+  function updateEdgeVisibility() {
+    mainEdges.forEach((edge) => edge.setVisible(true));
+    exceptionEdges.forEach((edge) => edge.setVisible(isExceptionVisible()));
+  }
+
   function render() {
-    graph.clearCells();
-    drawBlueprintFrame();
-    drawGroups();
-    drawEdges();
-    drawNodes();
+    updateGroupVisibility();
+    updateNodeStyles();
+    updateEdgeVisibility();
     updateDetails(state.selectedId);
     applyViewport();
+  }
+
+  function selectNode(nodeId) {
+    if (!nodesById.has(nodeId)) return;
+    state.selectedId = nodeId;
+    render();
   }
 
   function applyViewport() {
@@ -346,8 +393,7 @@
 
     graph.on("node:click", ({ node }) => {
       if (!nodesById.has(node.id)) return;
-      state.selectedId = node.id;
-      render();
+      selectNode(node.id);
     });
   }
 
@@ -364,8 +410,23 @@
     });
   }
 
+  function bindDomFallbackSelection() {
+    graphContainer.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-cell-id]");
+      if (!target) return;
+      const nodeId = target.getAttribute("data-cell-id");
+      if (!nodesById.has(nodeId)) return;
+      selectNode(nodeId);
+    });
+  }
+
   updateLegend();
+  createBlueprintFrame();
+  createGroups();
+  createNodes();
+  createEdges();
   bindNodeEvents();
+  bindDomFallbackSelection();
   bindViewToggle();
   viewButtons.forEach((item) => item.classList.toggle("is-active", item.dataset.view === state.view));
   window.addEventListener("resize", render);
