@@ -1,0 +1,4 @@
+interface:
+  display_name: "任务认领"
+  short_description: "认领任务并同步成员任务面板、状态面板与模块文档入口。"
+  default_prompt: "使用 $task-claim 认领任务池中的任务，并同步到当前成员目录。"
