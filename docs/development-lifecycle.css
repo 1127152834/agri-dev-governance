@@ -240,6 +240,10 @@ body {
   font-size: 1.7rem;
 }
 
+.detail-skill {
+  color: #cffafe !important;
+}
+
 .detail-description {
   margin-top: 12px !important;
 }
@@ -247,6 +251,17 @@ body {
 .detail-grid {
   display: grid;
   gap: 16px;
+}
+
+.prompt-block {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #dbeafe;
+  background: rgba(15, 23, 42, 0.64);
+  border: 1px dashed rgba(125, 211, 252, 0.28);
+  padding: 14px;
+  overflow-wrap: anywhere;
 }
 
 .detail-grid h3,
