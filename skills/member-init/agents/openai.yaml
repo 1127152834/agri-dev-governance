@@ -1,0 +1,4 @@
+interface:
+  display_name: "成员初始化"
+  short_description: "初始化成员资料、状态面板、任务容器、日报目录与基础归档结构。"
+  default_prompt: "使用 $member-init 初始化当前成员的资料、任务状态文件和日报目录。"
