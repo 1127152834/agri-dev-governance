@@ -1,0 +1,4 @@
+interface:
+  display_name: "任务池管理"
+  short_description: "管理任务池发布、指派、状态流转、日志留痕与任务生命周期。"
+  default_prompt: "使用 $task-pool-manager 管理任务池中的任务发布、指派和状态流转。"
