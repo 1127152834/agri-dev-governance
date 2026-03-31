@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>智慧农业开发治理线路图</title>
     <link rel="stylesheet" href="./development-lifecycle.css" />
+    <script src="./vendor/x6.min.js"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -40,12 +41,12 @@
               <p>悬停节点查看关联路径，点击节点查看阶段说明。</p>
             </div>
             <div class="toolbar-actions">
-              <button type="button" class="view-button is-active" data-view="all">全流程</button>
-              <button type="button" class="view-button" data-view="main">仅主流程</button>
+              <button type="button" class="view-button" data-view="all">全流程</button>
+              <button type="button" class="view-button is-active" data-view="main">仅主流程</button>
             </div>
           </div>
           <div class="canvas-frame">
-            <canvas id="blueprint-canvas" width="2020" height="760"></canvas>
+            <div id="blueprint-graph" class="blueprint-graph" aria-label="开发治理流程图"></div>
             <div class="coordinate-tag">坐标系 X/Y</div>
           </div>
         </section>
@@ -96,6 +97,6 @@
     </div>
 
     <script src="./development-lifecycle-data.js"></script>
-    <script src="./development-lifecycle-canvas.js"></script>
+    <script src="./development-lifecycle-x6.js"></script>
   </body>
 </html>
