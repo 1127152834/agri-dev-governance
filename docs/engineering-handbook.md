@@ -77,6 +77,7 @@ docs/
 
 后续将逐步补齐以下专项规范：
 
+- 开发治理线路图：`docs/development-lifecycle.html`
 - 团队开发总规范
 - 成员初始化规范
 - 产品设计门禁规范
