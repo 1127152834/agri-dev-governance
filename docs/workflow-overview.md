@@ -1,5 +1,7 @@
 # 开发流程总览
 
+可视化版本请查看：`docs/development-lifecycle.html`。
+
 ## 主流程
 
 ```text

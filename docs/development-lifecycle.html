@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智慧农业开发治理线路图</title>
+    <link rel="stylesheet" href="./development-lifecycle.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="drawing-header">
+        <div class="header-main">
+          <p class="eyebrow">智慧农业团队工程治理图纸</p>
+          <h1>开发治理线路图</h1>
+          <p class="subtitle">
+            面向开发者的统一研发闭环总装图，覆盖任务发布、设计、开发、验证、交付及异常回流。
+          </p>
+        </div>
+        <div class="header-meta">
+          <div class="meta-block">
+            <span class="meta-label">版本</span>
+            <span id="meta-version" class="meta-value"></span>
+          </div>
+          <div class="meta-block">
+            <span class="meta-label">日期</span>
+            <span id="meta-date" class="meta-value"></span>
+          </div>
+          <div class="meta-block">
+            <span class="meta-label">适用范围</span>
+            <span id="meta-scope" class="meta-value meta-value-wide"></span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-grid">
+        <section class="canvas-panel">
+          <div class="canvas-toolbar">
+            <div class="toolbar-copy">
+              <h2>流程总装图</h2>
+              <p>悬停节点查看关联路径，点击节点查看阶段说明。</p>
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="view-button is-active" data-view="all">全流程</button>
+              <button type="button" class="view-button" data-view="main">仅主流程</button>
+            </div>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="blueprint-canvas" width="2020" height="760"></canvas>
+            <div class="coordinate-tag">坐标系 X/Y</div>
+          </div>
+        </section>
+
+        <aside class="details-panel">
+          <div class="panel-card">
+            <p class="panel-kicker">当前节点</p>
+            <h2 id="detail-title">-</h2>
+            <p id="detail-description" class="detail-description"></p>
+          </div>
+          <div class="panel-card detail-grid">
+            <div>
+              <h3>责任角色</h3>
+              <p id="detail-role"></p>
+            </div>
+            <div>
+              <h3>输入</h3>
+              <p id="detail-input"></p>
+            </div>
+            <div>
+              <h3>输出</h3>
+              <p id="detail-output"></p>
+            </div>
+            <div>
+              <h3>进入下一阶段条件</h3>
+              <p id="detail-gate"></p>
+            </div>
+          </div>
+          <div class="panel-card">
+            <h3>阅读提示</h3>
+            <ul class="hint-list">
+              <li>白色主线表示标准开发闭环。</li>
+              <li>橙红色回流表示异常与返工路径。</li>
+              <li>绿色节点表示终态或归档态。</li>
+              <li>青色高亮表示当前聚焦节点及其关联路径。</li>
+            </ul>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="legend-panel">
+        <div class="legend-intro">
+          <h2>图例说明</h2>
+          <p>蓝图底板用于表达稳定、精确、可追溯的工程治理体系。</p>
+        </div>
+        <div id="legend-list" class="legend-list"></div>
+      </footer>
+    </div>
+
+    <script src="./development-lifecycle-data.js"></script>
+    <script src="./development-lifecycle-canvas.js"></script>
+  </body>
+</html>
