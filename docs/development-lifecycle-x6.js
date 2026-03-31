@@ -1,8 +1,10 @@
 (function () {
   const data = window.developmentLifecycleData;
+  const viewportHelpers = window.developmentLifecycleViewport;
   const { Graph } = window.X6;
 
   const graphContainer = document.getElementById("blueprint-graph");
+  const DEFAULT_MOUSEWHEEL_MAX_SCALE = 1.25;
   const detailElements = {
     title: document.getElementById("detail-title"),
     description: document.getElementById("detail-description"),
@@ -25,6 +27,9 @@
   const exceptionEdges = [];
   const mainNodes = new Map();
   const groupNodes = new Map();
+  const viewportState = {
+    fitScale: 1
+  };
 
   document.getElementById("meta-version").textContent = data.meta.version;
   document.getElementById("meta-date").textContent = data.meta.date;
@@ -125,7 +130,7 @@
     return new Graph({
       container: graphContainer,
       width: graphContainer.clientWidth || 1200,
-      height: 680,
+      height: viewportHelpers.resolveViewportHeight(isExceptionVisible()),
       panning: {
         enabled: true,
         modifiers: null
@@ -133,7 +138,7 @@
       mousewheel: {
         enabled: true,
         minScale: 0.75,
-        maxScale: 1.25
+        maxScale: DEFAULT_MOUSEWHEEL_MAX_SCALE
       },
       interacting: {
         nodeMovable: false,
@@ -349,7 +354,7 @@
   }
 
   function applyViewport() {
-    const height = isExceptionVisible() ? 760 : 620;
+    const height = viewportHelpers.resolveViewportHeight(isExceptionVisible());
     graphContainer.style.height = `${height}px`;
     graph.resize(graphContainer.clientWidth || 1200, height);
 
@@ -362,6 +367,10 @@
           maxScale: 1,
           preserveAspectRatio: true
         });
+
+        const fitScale = typeof graph.zoom === "function" ? graph.zoom() : 1;
+        viewportState.fitScale = Number.isFinite(fitScale) && fitScale > 0 ? fitScale : 1;
+        viewportHelpers.syncMousewheelBounds(graph, viewportState.fitScale, DEFAULT_MOUSEWHEEL_MAX_SCALE);
       }
     }
   }
