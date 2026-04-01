@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智慧农业团队开发治理体系培训</title>
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap"
+    />
+    <style>
+      :root {
+        --bg-0: #07111b;
+        --bg-1: #0f1d30;
+        --bg-2: #132844;
+        --panel: rgba(14, 28, 45, 0.9);
+        --panel-soft: rgba(18, 36, 58, 0.76);
+        --text-0: #f8fafc;
+        --text-1: rgba(226, 232, 240, 0.82);
+        --text-2: rgba(191, 219, 254, 0.58);
+        --accent: #22d3ee;
+        --accent-soft: rgba(34, 211, 238, 0.14);
+        --accent-warm: #f59e0b;
+        --accent-danger: #f97316;
+        --accent-success: #34d399;
+        --line: rgba(148, 163, 184, 0.16);
+        --line-strong: rgba(103, 232, 249, 0.36);
+        --shadow: 0 24px 60px rgba(2, 6, 23, 0.34);
+        --radius: 24px;
+        --font-display: "Cabinet Grotesk", sans-serif;
+        --font-body: "Satoshi", sans-serif;
+        --title-size: clamp(2.7rem, 6vw, 5.8rem);
+        --h2-size: clamp(1.8rem, 3vw, 3.05rem);
+        --h3-size: clamp(1.05rem, 1.4vw, 1.34rem);
+        --body-size: clamp(0.95rem, 1.12vw, 1.08rem);
+        --small-size: clamp(0.75rem, 0.9vw, 0.9rem);
+        --page-padding: clamp(0.9rem, 1.8vw, 1.6rem);
+        --gap: clamp(0.9rem, 1.6vw, 1.4rem);
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: var(--font-body);
+        color: var(--text-0);
+        background:
+          radial-gradient(circle at 16% 14%, rgba(34, 211, 238, 0.16), transparent 18%),
+          radial-gradient(circle at 84% 20%, rgba(245, 158, 11, 0.07), transparent 18%),
+          linear-gradient(140deg, var(--bg-0), var(--bg-1) 55%, var(--bg-2));
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+        background-size: 26px 26px, 26px 26px, 104px 104px, 104px 104px;
+        opacity: 0.42;
+        pointer-events: none;
+      }
+
+      .deck {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        position: absolute;
+        inset: 0 auto auto 0;
+        height: 4px;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), #67e8f9);
+        box-shadow: 0 0 22px rgba(34, 211, 238, 0.42);
+        z-index: 50;
+      }
+
+      .slide-counter {
+        position: absolute;
+        top: var(--page-padding);
+        right: calc(var(--page-padding) + 78px);
+        z-index: 50;
+        font-size: var(--small-size);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-2);
+      }
+
+      .nav-dots {
+        position: absolute;
+        top: 50%;
+        right: clamp(0.7rem, 1.4vw, 1rem);
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        z-index: 50;
+      }
+
+      .nav-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        border: 1px solid rgba(226, 232, 240, 0.35);
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+      }
+
+      .nav-dot.active {
+        transform: scale(1.4);
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .hint {
+        position: absolute;
+        right: var(--page-padding);
+        bottom: var(--page-padding);
+        z-index: 50;
+        font-size: var(--small-size);
+        color: var(--text-2);
+      }
+
+      .slides {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: var(--page-padding);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 0;
+        transform: translateY(3%);
+        transition: opacity 0.42s var(--ease), transform 0.58s var(--ease);
+      }
+
+      .slide.active {
+        opacity: 1 !important;
+        pointer-events: auto;
+        visibility: visible;
+        z-index: 2;
+        transform: translateY(0);
+      }
+
+      .frame {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: clamp(1rem, 2vw, 1.8rem);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: inset 0 0 0 1px rgba(103, 232, 249, 0.05);
+        background: linear-gradient(180deg, rgba(8, 17, 27, 0.94), rgba(15, 29, 48, 0.78));
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap);
+      }
+
+      .frame::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        font-size: var(--small-size);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        line-height: 0.92;
+      }
+
+      h1 {
+        font-size: var(--title-size);
+        max-width: 9ch;
+      }
+
+      h2 {
+        font-size: var(--h2-size);
+        max-width: 14ch;
+      }
+
+      h3 {
+        font-size: var(--h3-size);
+      }
+
+      p,
+      li {
+        font-size: var(--body-size);
+        line-height: 1.6;
+        color: var(--text-1);
+      }
+
+      ul {
+        list-style: none;
+        display: grid;
+        gap: 0.46rem;
+      }
+
+      li::before {
+        content: "—";
+        color: var(--accent);
+        margin-right: 0.5rem;
+      }
+
+      .panel,
+      .card,
+      .metric,
+      .step-card,
+      .mistake-card,
+      .hero-meta-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .panel,
+      .card,
+      .step-card,
+      .mistake-card,
+      .hero-meta-card {
+        padding: 1rem 1.12rem;
+      }
+
+      .panel strong,
+      .card strong,
+      .step-card strong,
+      .mistake-card strong,
+      .hero-meta-card strong {
+        display: block;
+        margin-bottom: 0.46rem;
+        font-family: var(--font-display);
+        font-size: var(--h3-size);
+        color: var(--text-0);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.22fr 0.78fr;
+        gap: var(--gap);
+        flex: 1;
+      }
+
+      .hero-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .hero-left p {
+        max-width: 42ch;
+      }
+
+      .hero-right {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-meta-card {
+        min-height: 100%;
+      }
+
+      .hero-brief {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.1rem;
+      }
+
+      .hero-brief-list {
+        display: grid;
+        gap: 0.95rem;
+      }
+
+      .hero-brief-item {
+        padding-top: 0.95rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-brief-item:first-child {
+        padding-top: 0;
+        border-top: none;
+      }
+
+      .hero-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+      }
+
+      .hero-token,
+      .tag,
+      .callout-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.34rem 0.72rem;
+        border-radius: 999px;
+        font-size: var(--small-size);
+      }
+
+      .hero-token {
+        background: rgba(18, 35, 57, 0.96);
+        border: 1px solid var(--line);
+      }
+
+      .tag {
+        border: 1px solid rgba(34, 211, 238, 0.32);
+        background: rgba(34, 211, 238, 0.1);
+        color: #cffafe;
+      }
+
+      .callout-chip.warn {
+        border: 1px solid rgba(249, 115, 22, 0.34);
+        background: rgba(249, 115, 22, 0.12);
+        color: #ffedd5;
+      }
+
+      .metric-band,
+      .three-col,
+      .mistake-grid,
+      .step-detail-grid {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .metric-band {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .metric {
+        padding: 0.95rem 1rem;
+        border-top: 1px solid rgba(34, 211, 238, 0.25);
+        background: linear-gradient(180deg, rgba(34, 211, 238, 0.12), rgba(16, 29, 47, 0.9));
+      }
+
+      .metric-value {
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+      }
+
+      .three-col {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        flex: 1;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+        gap: var(--gap);
+        flex: 1;
+      }
+
+      .flow-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        align-items: center;
+      }
+
+      .flow-token {
+        padding: 0.68rem 0.9rem;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(18, 35, 57, 0.96);
+        font-size: var(--small-size);
+      }
+
+      .flow-arrow {
+        color: var(--accent);
+      }
+
+      .step-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+        gap: 1rem;
+        flex: 1;
+      }
+
+      .step-hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.2rem;
+        border-radius: var(--radius);
+        border: 1px solid rgba(34, 211, 238, 0.22);
+        background:
+          radial-gradient(circle at top left, rgba(34, 211, 238, 0.14), transparent 42%),
+          linear-gradient(180deg, rgba(22, 38, 60, 0.96), rgba(9, 18, 30, 0.96));
+        box-shadow: var(--shadow);
+      }
+
+      .step-label {
+        font-size: var(--small-size);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .step-number {
+        font-family: var(--font-display);
+        font-size: clamp(3.4rem, 7vw, 6rem);
+        line-height: 0.84;
+        color: rgba(34, 211, 238, 0.22);
+      }
+
+      .step-hero h2 {
+        max-width: 7.5ch;
+      }
+
+      .step-hero p {
+        max-width: 28ch;
+      }
+
+      .step-detail-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-areas:
+          "wide wide wide"
+          "left middle right";
+      }
+
+      .step-card {
+        min-height: 182px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.72rem;
+      }
+
+      .step-card.wide {
+        grid-area: wide;
+        min-height: 130px;
+      }
+
+      .step-card.left {
+        grid-area: left;
+      }
+
+      .step-card.middle {
+        grid-area: middle;
+      }
+
+      .step-card.right {
+        grid-area: right;
+      }
+
+      .code-block {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: var(--small-size);
+        color: #bae6fd;
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(125, 211, 252, 0.18);
+        border-radius: 16px;
+        padding: 0.85rem 0.95rem;
+      }
+
+      .mistake-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex: 1;
+      }
+
+      .mistake-card {
+        border-color: rgba(249, 115, 22, 0.28);
+        background: linear-gradient(180deg, rgba(249, 115, 22, 0.12), rgba(16, 30, 48, 0.92));
+      }
+
+      .closing {
+        display: grid;
+        grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+        gap: 1rem;
+        flex: 1;
+      }
+
+      .action-list {
+        display: grid;
+        gap: 0.78rem;
+      }
+
+      .action-item {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 0.9rem;
+        padding: 0.84rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .action-item:first-child {
+        border-top: none;
+      }
+
+      .action-index {
+        color: var(--accent);
+        font-family: var(--font-display);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.58s var(--ease), transform 0.58s var(--ease);
+      }
+
+      .slide.active .reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .slide.active .reveal:nth-child(1) {
+        transition-delay: 0.08s;
+      }
+      .slide.active .reveal:nth-child(2) {
+        transition-delay: 0.16s;
+      }
+      .slide.active .reveal:nth-child(3) {
+        transition-delay: 0.24s;
+      }
+      .slide.active .reveal:nth-child(4) {
+        transition-delay: 0.32s;
+      }
+      .slide.active .reveal:nth-child(5) {
+        transition-delay: 0.4s;
+      }
+
+      @media (max-width: 1024px) {
+        :root {
+          --title-size: clamp(2rem, 8vw, 4rem);
+          --h2-size: clamp(1.4rem, 5vw, 2.2rem);
+          --body-size: clamp(0.88rem, 2vw, 1rem);
+        }
+
+        .hero,
+        .metric-band,
+        .three-col,
+        .split,
+        .step-layout,
+        .step-detail-grid,
+        .mistake-grid,
+        .closing {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+      <div class="progress-bar" id="progressBar"></div>
+      <div class="slide-counter" id="slideCounter">01 / 14</div>
+      <nav class="nav-dots" id="navDots" aria-label="幻灯片导航"></nav>
+      <div class="hint">左右方向键 / 空格翻页</div>
+
+      <main class="slides">
+        <section class="slide active" data-title="封面">
+          <div class="frame">
+            <div class="hero">
+              <div class="hero-left">
+                <p class="eyebrow reveal">智慧农业团队 · 治理体系培训</p>
+                <h1 class="reveal">把团队协作流程做成可执行的操作系统</h1>
+                <p class="reveal">
+                  这不是一套写在文档里的制度，而是一套真的能跑起来的团队协作机制。
+                  我们今天要讲的，是如何把项目初始化、任务池、认领、门禁、交付和日报串成一条可执行链。
+                </p>
+                <div class="hero-line reveal">
+                  <span class="hero-token">40 分钟</span>
+                  <span class="hero-token">认知 + 实操</span>
+                  <span class="hero-token">设备管理模块主线</span>
+                </div>
+              </div>
+              <div class="hero-right">
+                <div class="hero-meta-card hero-brief reveal">
+                  <strong>这场培训会回答什么</strong>
+                  <div class="hero-brief-list">
+                    <div class="hero-brief-item">
+                      <strong>培训对象</strong>
+                      <p>项目经理、开发人员、使用 Codex 的成员</p>
+                    </div>
+                    <div class="hero-brief-item">
+                      <strong>培训目标</strong>
+                      <p>建立统一认知，并让团队马上知道如何在真实项目里落地这套治理体系。</p>
+                    </div>
+                    <div class="hero-brief-item">
+                      <strong>主线场景</strong>
+                      <p>设备管理模块：从项目初始化到日报沉淀，跑通一次完整闭环。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="为什么做治理">
+          <div class="frame">
+            <p class="eyebrow reveal">问题背景</p>
+            <h2 class="reveal">团队项目真正失控的地方，不在技术，而在协作链路断裂</h2>
+            <div class="metric-band">
+              <div class="metric reveal">
+                <div class="metric-value">任务</div>
+                <p>来源混乱，口头沟通代替任务池</p>
+              </div>
+              <div class="metric reveal">
+                <div class="metric-value">文档</div>
+                <p>需求、设计、计划彼此断链</p>
+              </div>
+              <div class="metric reveal">
+                <div class="metric-value">交付</div>
+                <p>commit 和 PR 缺失测试证明与风险说明</p>
+              </div>
+              <div class="metric reveal">
+                <div class="metric-value">状态</div>
+                <p>任务池、成员视图、模块状态彼此失真</p>
+              </div>
+            </div>
+            <div class="panel reveal">
+              <strong>今天要解决的问题</strong>
+              <p>
+                我们要把“项目怎么开始、任务怎么进入、开发怎么推进、交付怎么检查、状态怎么同步、日报怎么沉淀”
+                全部变成一套可重复执行、可追溯、可回滚的团队操作系统。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="治理能力地图">
+          <div class="frame">
+            <p class="eyebrow reveal">治理地图</p>
+            <h2 class="reveal">当前主分支已经具备的治理能力，不是想法，而是可执行底座</h2>
+            <div class="three-col">
+              <div class="card reveal">
+                <strong>项目入口</strong>
+                <ul>
+                  <li>`project-bootstrap`</li>
+                  <li>`member-init`</li>
+                </ul>
+              </div>
+              <div class="card reveal">
+                <strong>任务流转</strong>
+                <ul>
+                  <li>`task-pool-manager`</li>
+                  <li>`task-claim`</li>
+                  <li>`task-status-sync`</li>
+                </ul>
+              </div>
+              <div class="card reveal">
+                <strong>开发与交付门禁</strong>
+                <ul>
+                  <li>`team-dev-spec`</li>
+                  <li>`commit-pr-spec`</li>
+                  <li>`daily-report`</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel reveal">
+              <strong>关键认知</strong>
+              <p>这套仓库的本质，不是把文档堆起来，而是把项目协作中最容易失控的动作做成有门禁、有记录、有出口的工作流。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="完整闭环">
+          <div class="frame">
+            <p class="eyebrow reveal">整体闭环</p>
+            <h2 class="reveal">真正要记住的，不是文件名，而是这条完整协作链</h2>
+            <div class="panel reveal">
+              <div class="flow-line">
+                <span class="flow-token">项目初始化</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">成员加入</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">任务进入</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">任务认领</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">开发前门禁</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">开发实现</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">提交交付</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">状态同步</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-token">每日日报</span>
+              </div>
+            </div>
+            <div class="three-col">
+              <div class="card reveal">
+                <strong>主记录</strong>
+                <p>任务池永远是主记录。</p>
+              </div>
+              <div class="card reveal">
+                <strong>派生视图</strong>
+                <p>成员 `tasks.md`、`status.md`、模块文档目录只是派生视图。</p>
+              </div>
+              <div class="card reveal">
+                <strong>门禁原则</strong>
+                <p>没有前置文档和验证证据，不进入下一阶段。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="角色分工">
+          <div class="frame">
+            <p class="eyebrow reveal">角色分工</p>
+            <h2 class="reveal">治理体系跑得顺，靠的是每个角色知道自己的责任边界</h2>
+            <div class="three-col">
+              <div class="panel reveal">
+                <strong>项目经理</strong>
+                <ul>
+                  <li>拆分任务</li>
+                  <li>发布任务</li>
+                  <li>指派任务</li>
+                  <li>维护任务池生命周期</li>
+                </ul>
+              </div>
+              <div class="panel reveal">
+                <strong>开发人员</strong>
+                <ul>
+                  <li>初始化成员资料</li>
+                  <li>认领任务</li>
+                  <li>生成需求、设计、计划、测试文档</li>
+                  <li>按规范提交代码与日报</li>
+                </ul>
+              </div>
+              <div class="panel reveal">
+                <strong>AI 助手 / Codex</strong>
+                <ul>
+                  <li>执行 Skill 工作流</li>
+                  <li>生成和修正文档</li>
+                  <li>做门禁检查</li>
+                  <li>做状态同步与归档</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="演示场景">
+          <div class="frame">
+            <p class="eyebrow reveal">统一案例</p>
+            <h2 class="reveal">我们用一个真实感足够强的场景，把所有 Skill 串成一条操作线</h2>
+            <div class="split">
+              <div class="panel reveal">
+                <strong>案例</strong>
+                <p>智慧农业平台 / 设备管理模块</p>
+                <strong>培训目标</strong>
+                <p>让团队知道：在真实项目里，这套治理体系该怎么用，而不是只停留在制度说明上。</p>
+              </div>
+              <div class="panel reveal">
+                <strong>今天的完整主线</strong>
+                <ul>
+                  <li>新项目启动</li>
+                  <li>成员加入</li>
+                  <li>任务进入与认领</li>
+                  <li>开发前门禁</li>
+                  <li>提交前门禁</li>
+                  <li>状态同步与日报沉淀</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="项目初始化">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤一 · 战术卡</div>
+                  <div class="step-number">01</div>
+                </div>
+                <div>
+                  <h2>项目初始化</h2>
+                  <p>第一步不是写代码，而是先把项目仓库变成一个能跑治理流程的操作环境。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card wide reveal">
+                  <strong>为什么必须有这一步</strong>
+                  <p>如果新仓库没有任务池、项目级规则入口和 PR 模板，后续所有协作都会重新退回口头沟通和临时约定。项目初始化的本质，是先把“治理骨架”铺进去，再开始承接真实业务。</p>
+                </article>
+                <article class="step-card left reveal">
+                  <strong>谁负责 / 怎么做</strong>
+                  <p>项目经理或项目负责人执行。</p>
+                  <div class="code-block">使用 $project-bootstrap 为一个新项目仓库初始化治理目录和规则入口。</div>
+                </article>
+                <article class="step-card middle reveal">
+                  <strong>会产出什么</strong>
+                  <ul>
+                    <li>`docs/project-overview.md`</li>
+                    <li>`docs/task-pool/` 生命周期目录</li>
+                    <li>项目级 `AGENTS.md`</li>
+                    <li>PR 模板</li>
+                  </ul>
+                </article>
+                <article class="step-card right reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>直接在空仓库开始开发</li>
+                    <li>项目没有任务池</li>
+                    <li>项目规则只存在口头说明里</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="成员初始化">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤二 · 战术卡</div>
+                  <div class="step-number">02</div>
+                </div>
+                <div>
+                  <h2>成员加入</h2>
+                  <p>先建立个人工作容器，再承接真实任务，后续状态和日报才有统一落点。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card reveal">
+                  <strong>为什么必须有这一步</strong>
+                  <p>没有 `profile.md`、`status.md`、`tasks.md` 和日报目录，状态同步和沉淀都无从谈起。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>谁负责 / 怎么做</strong>
+                  <p>开发人员自己执行，AI 助手可协助生成。</p>
+                  <div class="code-block">使用 $member-init 初始化当前成员的资料、任务状态文件和日报目录。</div>
+                </article>
+                <article class="step-card reveal">
+                  <strong>会产出什么</strong>
+                  <ul>
+                    <li>`profile.md`</li>
+                    <li>`status.md`</li>
+                    <li>`tasks.md`</li>
+                    <li>`reports/daily/README.md`</li>
+                  </ul>
+                </article>
+                <article class="step-card reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>没做成员初始化就认领任务</li>
+                    <li>个人状态不落文档</li>
+                    <li>日报目录缺失</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="任务池发布与认领">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤三 · 战术卡</div>
+                  <div class="step-number">03</div>
+                </div>
+                <div>
+                  <h2>任务先进入任务池，再被认领</h2>
+                  <p>这一步决定了任务是不是能被真正追踪，能不能在不同角色之间稳定流转。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card reveal">
+                  <strong>$task-pool-manager</strong>
+                  <p>把任务发布到 `01-ready`，指派后进入 `02-assigned`，并同步写入任务日志。</p>
+                  <span class="callout-chip warn">任务池是主记录</span>
+                </article>
+                <article class="step-card reveal">
+                  <strong>$task-claim</strong>
+                  <p>把任务同步到成员 `tasks.md`、`status.md` 和模块目录入口。</p>
+                  <span class="tag">成员视图只是派生视图</span>
+                </article>
+                <article class="step-card reveal">
+                  <strong>为什么必须这样设计</strong>
+                  <p>如果任务先进入个人视图、后补任务池，团队很快就会失去统一真相源。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>认领后删除任务文件</li>
+                    <li>只改成员视图，不改任务池</li>
+                    <li>不写任务流转日志</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="开发前门禁">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤四 · 战术卡</div>
+                  <div class="step-number">04</div>
+                </div>
+                <div>
+                  <h2>开发前门禁</h2>
+                  <p>这一步的意义，就是阻止“想写代码就直接写”的习惯进入团队协作链。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card reveal">
+                  <strong>核心能力</strong>
+                  <p>`$team-dev-spec` 负责判断当前阶段、列出缺失项、指引下一步 Skill。</p>
+                  <div class="code-block">使用 $team-dev-spec 检查我当前任务是否满足进入下一阶段的开发门禁。</div>
+                </article>
+                <article class="step-card reveal">
+                  <strong>为什么必须做</strong>
+                  <p>它是整个体系里最重要的防线，防止文档断链、跳过设计、跳过计划、跳过验证。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>典型门禁</strong>
+                  <ul>
+                    <li>没有 `01-需求说明.md`，不能直接开发</li>
+                    <li>没有 `03-实施计划.md`，不能直接编码</li>
+                    <li>没有测试结果，不能进入提交与 PR</li>
+                  </ul>
+                </article>
+                <article class="step-card reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>用口头说明替代文档</li>
+                    <li>把“应该没问题”当作验证</li>
+                    <li>跳过 worktree 直接开发</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="提交与交付">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤五 · 战术卡</div>
+                  <div class="step-number">05</div>
+                </div>
+                <div>
+                  <h2>提交与交付</h2>
+                  <p>交付不是“把代码推上去”，而是让别人有足够信息判断这次改动是否可信。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card reveal">
+                  <strong>核心能力</strong>
+                  <p>`$commit-pr-spec` 负责检查 commit message、PR 描述、测试证明、风险说明和回滚说明。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>PR 最低门槛</strong>
+                  <ul>
+                    <li>改动摘要</li>
+                    <li>关联文档</li>
+                    <li>测试证明</li>
+                    <li>风险说明</li>
+                    <li>回滚说明</li>
+                  </ul>
+                </article>
+                <article class="step-card reveal">
+                  <strong>为什么必须做这一步</strong>
+                  <p>如果交付描述不完整，评审只能靠猜，风险也无法真正被看见。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>PR 只写一句话</li>
+                    <li>没有测试证明</li>
+                    <li>不写回滚说明</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="状态同步与日报">
+          <div class="frame">
+            <div class="step-layout">
+              <div class="step-hero reveal">
+                <div>
+                  <div class="step-label">步骤六 · 战术卡</div>
+                  <div class="step-number">06</div>
+                </div>
+                <div>
+                  <h2>状态同步与日报</h2>
+                  <p>这两步不是收尾动作，而是把团队协作真正闭合的最后两道机制。</p>
+                </div>
+              </div>
+              <div class="step-detail-grid">
+                <article class="step-card reveal">
+                  <strong>$task-status-sync</strong>
+                  <p>对齐任务池、成员 `tasks.md`、成员 `status.md` 和模块文档状态。</p>
+                  <span class="tag">以任务池状态为准</span>
+                </article>
+                <article class="step-card reveal">
+                  <strong>$daily-report</strong>
+                  <p>读取 `tasks.md` 与 `status.md`，生成个人日报草稿，再由成员补充阻塞项和明日计划。</p>
+                  <span class="tag">日报是沉淀，不是形式</span>
+                </article>
+                <article class="step-card reveal">
+                  <strong>为什么必须做这一步</strong>
+                  <p>如果状态不同步、日报不沉淀，团队第二天就会失去上下文，协作成本会急剧上升。</p>
+                </article>
+                <article class="step-card reveal">
+                  <strong>常见错误</strong>
+                  <ul>
+                    <li>任务状态改了，但成员面板不更新</li>
+                    <li>只补日报，不同步 `status.md`</li>
+                    <li>日报只写情绪，不写任务和风险</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="常见错误">
+          <div class="frame">
+            <p class="eyebrow reveal">错误警示</p>
+            <h2 class="reveal">大多数团队不是因为不会写代码，而是因为总在重复这些协作错误</h2>
+            <div class="mistake-grid">
+              <article class="mistake-card reveal">
+                <strong>没做 member-init 就认领任务</strong>
+                <p>后续状态和日报没有落点。</p>
+              </article>
+              <article class="mistake-card reveal">
+                <strong>没过 team-dev-spec 就直接开发</strong>
+                <p>最容易导致文档断链和返工。</p>
+              </article>
+              <article class="mistake-card reveal">
+                <strong>只改成员视图，不改任务池</strong>
+                <p>主记录和派生视图失真，后续状态会越滚越乱。</p>
+              </article>
+              <article class="mistake-card reveal">
+                <strong>没有测试证明就发 PR</strong>
+                <p>评审人无法判断交付是否可信。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="落地建议">
+          <div class="frame">
+            <p class="eyebrow reveal">会后行动</p>
+            <h2 class="reveal">培训结束后，最重要的不是记住文件名，而是开始在真实项目里跑起来</h2>
+            <div class="closing">
+              <div class="panel reveal">
+                <strong>建议落地顺序</strong>
+                <div class="action-list">
+                  <div class="action-item">
+                    <div class="action-index">01</div>
+                    <div>
+                      <strong>挑一个真实项目仓库</strong>
+                      <p>先接入 `project-bootstrap`，不要从抽象演练开始。</p>
+                    </div>
+                  </div>
+                  <div class="action-item">
+                    <div class="action-index">02</div>
+                    <div>
+                      <strong>让一个 PM + 一个开发先试跑</strong>
+                      <p>先小范围试点，再向全团队推广。</p>
+                    </div>
+                  </div>
+                  <div class="action-item">
+                    <div class="action-index">03</div>
+                    <div>
+                      <strong>按周回看规则是否过重</strong>
+                      <p>不是越多越好，而是越稳定越好。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel reveal">
+                <strong>培训后必须收藏的入口</strong>
+                <ul>
+                  <li>`docs/user-manual.md`</li>
+                  <li>`docs/governance-overview.md`</li>
+                  <li>`docs/development-lifecycle.html`</li>
+                </ul>
+                <div class="code-block">下一步：选一个真实业务仓库，开始接入这套治理体系。</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.navDots = document.getElementById("navDots");
+          this.progressBar = document.getElementById("progressBar");
+          this.counter = document.getElementById("slideCounter");
+          this.currentSlide = 0;
+          this.totalSlides = this.slides.length;
+          this.setupNavDots();
+          this.setupKeyboardNav();
+          this.setupTouchNav();
+          this.updateUi();
+        }
+
+        setupNavDots() {
+          this.slides.forEach((slide, index) => {
+            const dot = document.createElement("button");
+            dot.className = "nav-dot";
+            dot.type = "button";
+            dot.setAttribute("aria-label", `跳转到第 ${index + 1} 页`);
+            dot.addEventListener("click", () => this.goToSlide(index));
+            this.navDots.appendChild(dot);
+          });
+        }
+
+        setupKeyboardNav() {
+          window.addEventListener("keydown", (event) => {
+            if (["ArrowRight", "ArrowDown", "PageDown", " "].includes(event.key)) {
+              event.preventDefault();
+              this.goToSlide(Math.min(this.currentSlide + 1, this.totalSlides - 1));
+            }
+            if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+              event.preventDefault();
+              this.goToSlide(Math.max(this.currentSlide - 1, 0));
+            }
+          });
+        }
+
+        setupTouchNav() {
+          let startX = 0;
+          window.addEventListener(
+            "touchstart",
+            (event) => {
+              startX = event.touches[0].clientX;
+            },
+            { passive: true }
+          );
+          window.addEventListener(
+            "touchend",
+            (event) => {
+              const delta = startX - event.changedTouches[0].clientX;
+              if (Math.abs(delta) < 50) return;
+              if (delta > 0) {
+                this.goToSlide(Math.min(this.currentSlide + 1, this.totalSlides - 1));
+              } else {
+                this.goToSlide(Math.max(this.currentSlide - 1, 0));
+              }
+            },
+            { passive: true }
+          );
+        }
+
+        goToSlide(index) {
+          this.currentSlide = index;
+          this.updateUi();
+        }
+
+        updateUi() {
+          this.slides.forEach((slide, index) => {
+            slide.classList.toggle("active", index === this.currentSlide);
+          });
+
+          Array.from(this.navDots.children).forEach((dot, index) => {
+            dot.classList.toggle("active", index === this.currentSlide);
+          });
+
+          const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+          this.progressBar.style.width = `${progress}%`;
+          this.counter.textContent = `${String(this.currentSlide + 1).padStart(2, "0")} / ${String(this.totalSlides).padStart(2, "0")}`;
+        }
+      }
+
+      window.__deck = new SlidePresentation();
+    </script>
+  </body>
+</html>
