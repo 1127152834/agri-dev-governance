@@ -12,8 +12,8 @@
 
 ### 任务二：编写任务池规范文档
 
-- 新建 `docs/task-pool-manager.md`
-- 新建 `docs/task-lifecycle.md`
+- 新建 `docs/workflows/task-pool-manager.md`
+- 新建 `docs/workflows/task-lifecycle.md`
 
 ### 任务三：创建任务池模板
 

@@ -12,7 +12,7 @@
 
 ### 任务二：编写状态同步规范文档
 
-- 新建 `docs/task-status-sync.md`
+- 新建 `docs/workflows/task-status-sync.md`
 - 明确主记录、派生视图、同步范围和冲突处理策略。
 
 ### 任务三：编写 Skill

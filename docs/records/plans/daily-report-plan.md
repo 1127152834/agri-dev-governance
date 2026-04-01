@@ -12,7 +12,7 @@
 
 ### 任务二：编写日报规范文档
 
-- 新建 `docs/daily-report.md`
+- 新建 `docs/workflows/daily-report.md`
 - 定义个人日报路径、字段和使用方式。
 
 ### 任务三：创建日报模板

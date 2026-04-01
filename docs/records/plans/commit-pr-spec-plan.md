@@ -12,7 +12,7 @@
 
 ### 任务二：编写提交与 PR 规范文档
 
-- 新建 `docs/commit-pr-spec.md`
+- 新建 `docs/workflows/commit-pr-spec.md`
 - 定义 commit message 规范、PR 必填项、测试证明、风险说明、回滚说明。
 
 ### 任务三：创建模板

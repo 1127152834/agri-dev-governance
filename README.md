@@ -35,7 +35,11 @@
 
 ## 目录说明
 
-- `docs/`：工程手册、流程说明、规范文档
+- `docs/overview/`：治理总览、工程手册、流程总览
+- `docs/workflows/`：各流程规范正文
+- `docs/visuals/`：可视化流程与前端资源
+- `docs/training/`：培训材料与使用手册
+- `docs/records/`：设计文档与实施计划归档
 - `skills/`：团队自定义 Skill
 - `templates/`：统一文档模板
 - `scripts/`：本地与 CI 校验脚本

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require("node:assert/strict");
-const viewport = require("../docs/development-lifecycle-viewport.js");
+const viewport = require("../docs/visuals/development-lifecycle/viewport.js");
 
 function test(name, fn) {
   try {

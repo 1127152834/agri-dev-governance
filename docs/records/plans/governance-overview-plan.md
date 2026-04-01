@@ -12,7 +12,7 @@
 
 ### 任务二：编写总览文档
 
-- 新建 `docs/governance-overview.md`
+- 新建 `docs/overview/governance-overview.md`
 - 串联现有治理能力、Skill、目录和推荐流程。
 
 ### 任务三：验证与提交

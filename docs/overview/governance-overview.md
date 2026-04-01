@@ -15,9 +15,9 @@
 
 ### 2.1 流程可视化
 
-- `docs/development-lifecycle.html`
-- `docs/development-lifecycle.css`
-- `docs/development-lifecycle-x6.js`
+- `docs/visuals/development-lifecycle/index.html`
+- `docs/visuals/development-lifecycle/styles.css`
+- `docs/visuals/development-lifecycle/x6.js`
 
 作用：
 
@@ -27,7 +27,7 @@
 
 ### 2.2 成员初始化
 
-- `docs/member-init.md`
+- `docs/workflows/member-init.md`
 - `skills/member-init/SKILL.md`
 - `templates/member/`
 
@@ -40,7 +40,7 @@
 
 ### 2.3 开发总门禁
 
-- `docs/team-dev-spec.md`
+- `docs/workflows/team-dev-spec.md`
 - `skills/team-dev-spec/SKILL.md`
 
 作用：
@@ -51,8 +51,8 @@
 
 ### 2.4 任务池管理
 
-- `docs/task-pool-manager.md`
-- `docs/task-lifecycle.md`
+- `docs/workflows/task-pool-manager.md`
+- `docs/workflows/task-lifecycle.md`
 - `skills/task-pool-manager/SKILL.md`
 - `templates/task-pool/`
 
@@ -65,7 +65,7 @@
 
 ### 2.5 任务认领
 
-- `docs/task-claim.md`
+- `docs/workflows/task-claim.md`
 - `skills/task-claim/SKILL.md`
 
 作用：
@@ -77,7 +77,7 @@
 
 ### 2.6 提交与 PR 规范
 
-- `docs/commit-pr-spec.md`
+- `docs/workflows/commit-pr-spec.md`
 - `skills/commit-pr-spec/SKILL.md`
 - `templates/commit-pr/`
 
@@ -89,7 +89,7 @@
 
 ### 2.7 状态同步
 
-- `docs/task-status-sync.md`
+- `docs/workflows/task-status-sync.md`
 - `skills/task-status-sync/SKILL.md`
 
 作用：
@@ -126,8 +126,8 @@
 ### 新成员加入
 
 1. `member-init`
-2. 阅读 `development-lifecycle.html`
-3. 阅读 `engineering-handbook.md`
+2. 阅读 `visuals/development-lifecycle/index.html`
+3. 阅读 `overview/engineering-handbook.md`
 
 ### 新任务进入
 
