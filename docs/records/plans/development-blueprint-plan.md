@@ -36,10 +36,10 @@
 
 ## 3. 交付物
 
-- `docs/development-lifecycle.html`
-- `docs/development-lifecycle.css`
-- `docs/development-lifecycle-data.js`
-- `docs/development-lifecycle-canvas.js`
+- `docs/visuals/development-lifecycle/index.html`
+- `docs/visuals/development-lifecycle/styles.css`
+- `docs/visuals/development-lifecycle/data.js`
+- `docs/visuals/development-lifecycle/x6.js`
 - 本实施计划与设计文档
 
 ## 4. 风险控制

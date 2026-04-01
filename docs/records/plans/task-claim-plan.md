@@ -12,7 +12,7 @@
 
 ### 任务二：编写任务认领规范文档
 
-- 新建 `docs/task-claim.md`
+- 新建 `docs/workflows/task-claim.md`
 - 定义认领步骤、同步动作与门禁条件。
 
 ### 任务三：编写 Skill

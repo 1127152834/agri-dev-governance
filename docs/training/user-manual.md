@@ -10,9 +10,9 @@
 
 建议先阅读以下内容：
 
-- `docs/governance-overview.md`
-- `docs/development-lifecycle.html`
-- `docs/engineering-handbook.md`
+- `docs/overview/overview/governance-overview.md`
+- `docs/visuals/development-lifecycle/index.html`
+- `docs/overview/overview/engineering-handbook.md`
 
 ## 3. 角色分工
 

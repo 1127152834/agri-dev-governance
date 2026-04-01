@@ -12,7 +12,7 @@
 
 ### 任务二：编写成员初始化规范文档
 
-- 新建 `docs/member-init.md`
+- 新建 `docs/workflows/member-init.md`
 - 定义初始化范围、目录结构、文件职责和使用方式。
 
 ### 任务三：创建模板

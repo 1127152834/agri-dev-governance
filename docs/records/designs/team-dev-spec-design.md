@@ -41,10 +41,10 @@
 
 ## 5. 依赖文档
 
-- `docs/engineering-handbook.md`
-- `docs/workflow-overview.md`
-- `docs/development-lifecycle.html`
-- `docs/team-dev-spec.md`
+- `docs/overview/overview/engineering-handbook.md`
+- `docs/overview/workflow-overview.md`
+- `docs/visuals/development-lifecycle/index.html`
+- `docs/workflows/team-dev-spec.md`
 
 ## 6. 阶段分流
 

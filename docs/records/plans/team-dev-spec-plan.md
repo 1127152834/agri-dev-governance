@@ -12,7 +12,7 @@
 
 ### 任务二：编写规范文档
 
-- 新建 `docs/team-dev-spec.md`
+- 新建 `docs/workflows/team-dev-spec.md`
 - 定义适用范围、门禁规则、阶段判断、分流映射和禁止事项。
 
 ### 任务三：编写 Skill

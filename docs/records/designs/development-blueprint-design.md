@@ -59,10 +59,10 @@
 
 ## 7. 文件结构
 
-- `docs/development-lifecycle.html`：页面结构
-- `docs/development-lifecycle.css`：蓝图风格与布局样式
-- `docs/development-lifecycle-data.js`：流程节点、异常关系与图例数据
-- `docs/development-lifecycle-canvas.js`：Canvas 绘图、命中检测与交互逻辑
+- `docs/visuals/development-lifecycle/index.html`：页面结构
+- `docs/visuals/development-lifecycle/styles.css`：蓝图风格与布局样式
+- `docs/visuals/development-lifecycle/data.js`：流程节点、异常关系与图例数据
+- `docs/visuals/development-lifecycle/x6.js`：Canvas 绘图、命中检测与交互逻辑
 
 ## 8. 验证方式
 

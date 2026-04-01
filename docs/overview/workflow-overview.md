@@ -1,6 +1,6 @@
 # 开发流程总览
 
-可视化版本请查看：`docs/development-lifecycle.html`。
+可视化版本请查看：`docs/visuals/development-lifecycle/index.html`。
 
 ## 主流程
 

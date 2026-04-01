@@ -116,6 +116,6 @@ docs/
 
 ## 9. 关联资料
 
-- `docs/engineering-handbook.md`
-- `docs/workflow-overview.md`
-- `docs/development-lifecycle.html`
+- `docs/overview/overview/engineering-handbook.md`
+- `docs/overview/workflow-overview.md`
+- `docs/visuals/development-lifecycle/index.html`

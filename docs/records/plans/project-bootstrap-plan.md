@@ -12,7 +12,7 @@
 
 ### 任务二：编写项目初始化规范文档
 
-- 新建 `docs/project-bootstrap.md`
+- 新建 `docs/workflows/project-bootstrap.md`
 - 定义初始化目标结构和输出文件。
 
 ### 任务三：创建项目模板
